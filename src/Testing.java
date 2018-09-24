@@ -8,6 +8,12 @@ import java.util.Collections;
 
 public class Testing {
 
+    /* Tests accuracy of distance methods. Outputs an ArrayList containing the number of best matches for each method
+    * Entry 0=Jaro, ...
+    * For each mutation if the mutation receives the highest score when compared to the rest of the genes it is
+    * considered a match as this would indicate the algorithm correctly guessing which entry was the mutated
+    * signed tag. The matches for each algorithm are summed.
+    */
     public static ArrayList<Integer> test_accuracy_of_methods
             (String original_gene, ArrayList<String> gene_sequence, ArrayList<String> mutations) {
         ArrayList<Integer> results = new ArrayList<Integer>(1);
@@ -34,6 +40,8 @@ public class Testing {
         return results;
     }
 
+    /* Reads in gene sequences from a file, assume genes are on seperate lines
+    */
     public static ArrayList<String> read_gene_sequence_from_file(String input_file) {
         ArrayList<String> genes = new ArrayList<String>();
 
@@ -60,6 +68,8 @@ public class Testing {
 
     }
 
+    /* Removes number from a file containg gene sequences. Use to clean genes file from a .gb
+    */
     public static void clean_file(String input_file) {
         try {
 
