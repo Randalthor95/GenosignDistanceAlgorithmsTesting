@@ -29,8 +29,10 @@ public class Testing {
 
         int jaro_matches = 0;
         for (int i = 0; i < mutations.size(); ++i) {
+
             if (Algorithms.jaro(original_gene, mutations.get(i)) >= max)
                 jaro_matches++;
+
         }
         results.add(jaro_matches);
 
