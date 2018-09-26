@@ -3,7 +3,7 @@ public class Algorithms {
 
     /* Jaro https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
      */
-    public static double jaro(String s1, String s2) {
+    static double jaro(String s1, String s2) {
 
         if (s1.length() == 0 && s2.length() == 0)
             return 1;
@@ -48,7 +48,7 @@ public class Algorithms {
     * returns -1 if length_of_prefix_l is negative or greater than four
     * returns -1 if weight_of_scaling_factor_p is zero or greater than 0.25
     */
-    public static double jaro_winkler(String s1, String s2, int length_of_prefix_l, double weight_of_scaling_factor_p) {
+    static double jaro_winkler(String s1, String s2, int length_of_prefix_l, double weight_of_scaling_factor_p) {
         if (length_of_prefix_l > 4 || length_of_prefix_l < 1)
             return -1;
         if (weight_of_scaling_factor_p > 0.25 || weight_of_scaling_factor_p < 0)

@@ -3,7 +3,6 @@ import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class Testing {
@@ -14,8 +13,8 @@ public class Testing {
     * considered a match as this would indicate the algorithm correctly guessing which entry was the mutated
     * signed tag. The matches for each algorithm are summed.
     */
-    public static ArrayList<Integer> test_accuracy_of_methods
-            (String original_gene, ArrayList<String> gene_sequence, ArrayList<String> mutations) {
+    static ArrayList<Integer> test_accuracy_of_methods
+    (String original_gene, ArrayList<String> gene_sequence, ArrayList<String> mutations) {
         ArrayList<Integer> results = new ArrayList<Integer>(1);
 
 
@@ -59,7 +58,7 @@ public class Testing {
 
     /* Reads in gene sequences from a file, assume genes are on seperate lines
     */
-    public static ArrayList<String> read_gene_sequence_from_file(String input_file) {
+    static ArrayList<String> read_gene_sequence_from_file(String input_file) {
         ArrayList<String> genes = new ArrayList<String>();
 
         try {
@@ -87,7 +86,7 @@ public class Testing {
 
     /* Removes number from a file containg gene sequences. Use to clean genes file from a .gb
     */
-    public static void clean_file(String input_file) {
+    private static void clean_file(String input_file) {
         try {
 
             File file = new File(input_file);
@@ -123,7 +122,7 @@ public class Testing {
     }
 
 
-    public static boolean isNumeric(String str) {
+    private static boolean isNumeric(String str) {
         NumberFormat formatter = NumberFormat.getInstance();
         ParsePosition pos = new ParsePosition(0);
         formatter.parse(str, pos);
