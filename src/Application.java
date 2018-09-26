@@ -10,9 +10,10 @@ public class Application {
 
         ArrayList<Integer> matches = Testing.test_accuracy_of_methods(original_gene, gene_sequence, mutations);
 
-        for (int i = 0; i < matches.size(); ++i) {
-            System.out.println("Matches: " + Integer.toString(matches.get(i)) + "/" + Integer.toString(mutations.size()));
-        }
+
+            System.out.println("Jaro Matches: " + Integer.toString(matches.get(0)) + "/" + Integer.toString(mutations.size()));
+        System.out.println("Levenshtein Matches: " + Integer.toString(matches.get(0)) + "/" + Integer.toString(mutations.size()));
+
 
     }
 }
