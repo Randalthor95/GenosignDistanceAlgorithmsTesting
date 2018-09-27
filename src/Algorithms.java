@@ -45,9 +45,9 @@ public class Algorithms {
     }
 
     /* Jaro-Winkler https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
-    * returns -1 if length_of_prefix_l is negative or greater than four
-    * returns -1 if weight_of_scaling_factor_p is zero or greater than 0.25
-    */
+     * returns -1 if length_of_prefix_l is negative or greater than four
+     * returns -1 if weight_of_scaling_factor_p is zero or greater than 0.25
+     */
     public static double jaro_winkler(String s1, String s2, int length_of_prefix_l, double weight_of_scaling_factor_p) {
         if (length_of_prefix_l > 4 || length_of_prefix_l < 1)
             return -1;
@@ -60,4 +60,24 @@ public class Algorithms {
 
     }
 
+
+    public static int levenshtein_distance(String s1, String s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
+        // i == 0
+        int[] costs = new int[s2.length() + 1];
+        for (int j = 0; j < costs.length; j++)
+            costs[j] = j;
+        for (int i = 1; i <= s1.length(); i++) {
+            // j == 0; nw = lev(i - 1, j)
+            costs[0] = i;
+            int nw = i - 1;
+            for (int j = 1; j <= s2.length(); j++) {
+                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), s1.charAt(i - 1) == s2.charAt(j - 1) ? nw : nw + 1);
+                nw = costs[j];
+                costs[j] = cj;
+            }
+        }
+        return costs[s2.length()];
+    }
 }
