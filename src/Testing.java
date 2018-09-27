@@ -37,15 +37,12 @@ public class Testing {
 
 
         //Next Algorihtm
-        for (int i = 0; i < gene_sequence.size(); ++i) {
-            scores.add(Algorithms.jaro(original_gene, gene_sequence.get(i)));
-        }
         max = Collections.max(scores);
 
         int levenshtein_matches = 0;
         for (int i = 0; i < mutations.size(); ++i) {
 
-            if (Algorithms.jaro(original_gene, mutations.get(i)) >= max)
+            if (Algorithms.levenshtein_distance(original_gene, mutations.get(i)) >= max)
                 levenshtein_matches++;
 
         }

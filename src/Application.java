@@ -12,7 +12,7 @@ public class Application {
 
 
             System.out.println("Jaro Matches: " + Integer.toString(matches.get(0)) + "/" + Integer.toString(mutations.size()));
-        System.out.println("Levenshtein Matches: " + Integer.toString(matches.get(0)) + "/" + Integer.toString(mutations.size()));
+        System.out.println("Levenshtein Matches: " + Integer.toString(matches.get(1)) + "/" + Integer.toString(mutations.size()));
 
 
     }
