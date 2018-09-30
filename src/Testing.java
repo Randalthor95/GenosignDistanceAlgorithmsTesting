@@ -36,7 +36,7 @@ public class Testing {
         results.add(jaro_matches);
 
 
-        //Next Algorihtm
+        //Levenshtein
         max = Collections.max(scores);
 
         int levenshtein_matches = 0;
@@ -48,10 +48,21 @@ public class Testing {
         }
         results.add(levenshtein_matches);
 
+        //Jaccard
+        max = Collections.max(scores);
 
+        int Jaccard_matches = 0;
+        for (int i = 0; i < mutations.size(); ++i) {
+
+            if (Algorithms.jaccard_similarity(original_gene, mutations.get(i)) >= max)
+                Jaccard_matches++;
+        }
+        results.add(Jaccard_matches);
 
         return results;
     }
+
+
 
     /* Reads in gene sequences from a file, assume genes are on seperate lines
     */

@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 
 public class Algorithms {
 
@@ -79,5 +81,30 @@ public class Algorithms {
             }
         }
         return costs[s2.length()];
+    }
+
+     public static Double jaccard_similarity(final String left, final String right) {
+        final Set<String> intersectionSet = new HashSet<>();
+        final Set<String> unionSet = new HashSet<>();
+        boolean unionFilled = false;
+        final int leftLength = left.length();
+        final int rightLength = right.length();
+        if (leftLength == 0 || rightLength == 0) {
+            return 0d;
+        }
+
+        for (int leftIndex = 0; leftIndex < leftLength; leftIndex++) {
+            unionSet.add(String.valueOf(left.charAt(leftIndex)));
+            for (int rightIndex = 0; rightIndex < rightLength; rightIndex++) {
+                if (!unionFilled) {
+                    unionSet.add(String.valueOf(right.charAt(rightIndex)));
+                }
+                if (left.charAt(leftIndex) == right.charAt(rightIndex)) {
+                    intersectionSet.add(String.valueOf(left.charAt(leftIndex)));
+                }
+            }
+            unionFilled = true;
+        }
+        return Double.valueOf(intersectionSet.size()) / Double.valueOf(unionSet.size());
     }
 }
