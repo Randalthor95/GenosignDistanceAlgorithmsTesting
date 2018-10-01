@@ -62,6 +62,33 @@ public class Testing {
         return results;
     }
 
+    /* Prints the testing results for the given mutations sets
+    *
+     */
+    static void print_results_of_tests
+    (String original_gene, ArrayList<String> gene_sequence,
+     ArrayList<ArrayList<String>> mutations_sets, ArrayList<String> mutations_sets_names) {
+
+        ArrayList<ArrayList<Integer>> matches = new ArrayList<ArrayList<Integer>>();
+        for(int i = 0; i < mutations_sets.size(); ++i) {
+            matches.add(Testing.test_accuracy_of_methods(original_gene, gene_sequence, mutations_sets.get(i)));
+        }
+
+
+        System.out.println("                Jaro,    Levenshtein,   Jaccard");
+        for(int i = 0; i< mutations_sets.size(); ++i) {
+            System.out.print(mutations_sets_names.get(i) + ":  ");
+            System.out.print( Integer.toString(matches.get(i).get(0)) + "/"
+                    + Integer.toString(mutations_sets.get(i).size()) + "      ");
+            System.out.print( Integer.toString(matches.get(i).get(1)) + "/"
+                    + Integer.toString(mutations_sets.get(i).size()) + "          ");
+            System.out.print( Integer.toString(matches.get(i).get(2)) + "/"
+                    + Integer.toString(mutations_sets.get(i).size()) + " ");
+            System.out.println("");
+        }
+
+
+    }
 
 
     /* Reads in gene sequences from a file, assume genes are on seperate lines
@@ -128,7 +155,6 @@ public class Testing {
         }
 
     }
-
 
     private static boolean isNumeric(String str) {
         NumberFormat formatter = NumberFormat.getInstance();
