@@ -75,7 +75,7 @@ public class Testing {
         }
 
 
-        System.out.println("                Jaro,    Levenshtein,   Jaccard");
+        System.out.println("          Jaro,    Levenshtein,   Jaccard");
         for(int i = 0; i< mutations_sets.size(); ++i) {
             System.out.print(mutations_sets_names.get(i) + ":  ");
             System.out.print( Integer.toString(matches.get(i).get(0)) + "/"
@@ -88,6 +88,30 @@ public class Testing {
         }
 
 
+    }
+
+    static void print_test_results_for_n_errors
+            (String original_gene, ArrayList<String> gene_sequence, int number_of_errors) {
+        ArrayList<ArrayList<String>> mutations_sets = new ArrayList<ArrayList<String>>();
+        ArrayList<String> mutations_sets_names = new ArrayList<>();
+
+        for(int i = 1; i <= number_of_errors; ++i) {
+            ArrayList<String> mutations1 = Mutation_Generation.generate_substitution_mutation_permutations(original_gene, i);
+            mutations_sets.add(mutations1);
+            mutations_sets_names.add(i +" Subst.");
+
+            ArrayList<String> mutationsd1 = Mutation_Generation.generate_deletion_mutation_permutations(original_gene, i);
+            mutations_sets.add(mutationsd1);
+            mutations_sets_names.add(i +" Delete");
+
+            ArrayList<String> mutationsi1 = Mutation_Generation.generate_insertion_mutation_permutations(original_gene, i);
+            mutations_sets.add(mutationsi1);
+            mutations_sets_names.add(i + " Insert");
+
+        }
+
+
+        Testing.print_results_of_tests(original_gene, gene_sequence, mutations_sets,  mutations_sets_names);
     }
 
 
