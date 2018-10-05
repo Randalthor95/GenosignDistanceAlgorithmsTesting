@@ -29,8 +29,11 @@ public class Testing {
         int jaro_matches = 0;
         for (int i = 0; i < mutations.size(); ++i) {
 
-            if (Algorithms.jaro(original_gene, mutations.get(i)) >= max)
+            double score = Algorithms.jaro(original_gene, mutations.get(i));
+            if (score >= max) {
                 jaro_matches++;
+                System.out.println(mutations.get(i) + " " + Algorithms.jaro(original_gene, mutations.get(i)));
+            }
 
         }
         results.add(jaro_matches);
@@ -187,4 +190,12 @@ public class Testing {
         return str.length() == pos.getIndex();
     }
 
+    private static void time_algorithms (String original_gene, ArrayList<String> gene_sequence) {
+        long startTime = System.nanoTime();
+        //algorithm
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+        System.out.print(duration);
+    }
 }
