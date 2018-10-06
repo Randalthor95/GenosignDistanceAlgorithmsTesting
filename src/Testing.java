@@ -4,15 +4,16 @@ import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Testing {
 
     /* Tests accuracy of distance methods. Outputs an ArrayList containing the number of best matches for each method
-    * Entry 0=Jaro, ...
-    * For each mutation if the mutation receives the highest score when compared to the rest of the genes it is
-    * considered a match as this would indicate the algorithm correctly guessing which entry was the mutated
-    * signed tag. The matches for each algorithm are summed.
-    */
+     * Entry 0=Jaro, ...
+     * For each mutation if the mutation receives the highest score when compared to the rest of the genes it is
+     * considered a match as this would indicate the algorithm correctly guessing which entry was the mutated
+     * signed tag. The matches for each algorithm are summed.
+     */
     static ArrayList<Integer> test_accuracy_of_methods
     (String original_gene, ArrayList<String> gene_sequence, ArrayList<String> mutations) {
         ArrayList<Integer> results = new ArrayList<Integer>(1);
@@ -66,26 +67,26 @@ public class Testing {
     }
 
     /* Prints the testing results for the given mutations sets
-    *
+     *
      */
     static void print_results_of_tests
     (String original_gene, ArrayList<String> gene_sequence,
      ArrayList<ArrayList<String>> mutations_sets, ArrayList<String> mutations_sets_names) {
 
         ArrayList<ArrayList<Integer>> matches = new ArrayList<ArrayList<Integer>>();
-        for(int i = 0; i < mutations_sets.size(); ++i) {
+        for (int i = 0; i < mutations_sets.size(); ++i) {
             matches.add(Testing.test_accuracy_of_methods(original_gene, gene_sequence, mutations_sets.get(i)));
         }
 
 
         System.out.println("          Jaro,    Levenshtein,   Jaccard");
-        for(int i = 0; i< mutations_sets.size(); ++i) {
+        for (int i = 0; i < mutations_sets.size(); ++i) {
             System.out.print(mutations_sets_names.get(i) + ":  ");
-            System.out.print( Integer.toString(matches.get(i).get(0)) + "/"
+            System.out.print(Integer.toString(matches.get(i).get(0)) + "/"
                     + Integer.toString(mutations_sets.get(i).size()) + "      ");
-            System.out.print( Integer.toString(matches.get(i).get(1)) + "/"
+            System.out.print(Integer.toString(matches.get(i).get(1)) + "/"
                     + Integer.toString(mutations_sets.get(i).size()) + "          ");
-            System.out.print( Integer.toString(matches.get(i).get(2)) + "/"
+            System.out.print(Integer.toString(matches.get(i).get(2)) + "/"
                     + Integer.toString(mutations_sets.get(i).size()) + " ");
             System.out.println("");
         }
@@ -98,14 +99,14 @@ public class Testing {
         ArrayList<ArrayList<String>> mutations_sets = new ArrayList<ArrayList<String>>();
         ArrayList<String> mutations_sets_names = new ArrayList<>();
 
-        for(int i = 1; i <= number_of_errors; ++i) {
+        for (int i = 1; i <= number_of_errors; ++i) {
             ArrayList<String> mutations1 = Mutation_Generation.generate_substitution_mutation_permutations(original_gene, i);
             mutations_sets.add(mutations1);
-            mutations_sets_names.add(i +" Subst.");
+            mutations_sets_names.add(i + " Subst.");
 
             ArrayList<String> mutationsd1 = Mutation_Generation.generate_deletion_mutation_permutations(original_gene, i);
             mutations_sets.add(mutationsd1);
-            mutations_sets_names.add(i +" Delete");
+            mutations_sets_names.add(i + " Delete");
 
             ArrayList<String> mutationsi1 = Mutation_Generation.generate_insertion_mutation_permutations(original_gene, i);
             mutations_sets.add(mutationsi1);
@@ -114,12 +115,12 @@ public class Testing {
         }
 
 
-        Testing.print_results_of_tests(original_gene, gene_sequence, mutations_sets,  mutations_sets_names);
+        Testing.print_results_of_tests(original_gene, gene_sequence, mutations_sets, mutations_sets_names);
     }
 
 
     /* Reads in gene sequences from a file, assume genes are on seperate lines
-    */
+     */
     static ArrayList<String> read_gene_sequence_from_file(String input_file) {
         ArrayList<String> genes = new ArrayList<String>();
 
@@ -146,8 +147,63 @@ public class Testing {
 
     }
 
+    static void time_algorithms(String original_gene, ArrayList<String> gene_sequence) {
+
+        long startTime = System.nanoTime();
+        for (int i = 0; i < gene_sequence.size(); ++i) {
+            Algorithms.jaro(original_gene, gene_sequence.get(i));
+        }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+        System.out.println("Jaro time: " + duration + "ms");
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < gene_sequence.size(); ++i) {
+            Algorithms.levenshtein_distance(original_gene, gene_sequence.get(i));
+        }
+        endTime = System.nanoTime();
+        duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+        System.out.println("Levenshtein time: " + duration + "ms");
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < gene_sequence.size(); ++i) {
+            Algorithms.jaccard_similarity(original_gene, gene_sequence.get(i));
+        }
+        endTime = System.nanoTime();
+        duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+        System.out.println("Jaccard time: " + duration + "ms");
+    }
+
+
+    static ArrayList<String> make_random_gene_strings(int number_of_characters, int number_of_string) {
+
+        ArrayList<String> strings = new ArrayList<String>();
+        Random rand = new Random();
+
+
+        for (int i = 0; i < number_of_string; ++i) {
+            StringBuilder temp = new StringBuilder();
+            for (int j = 0; j < number_of_characters; ++j) {
+                int num = rand.nextInt(4) + 1;
+                if (num == 1)
+                    temp.append("a");
+                else if (num == 2)
+                    temp.append("c");
+                else if (num == 3)
+                    temp.append("c");
+                else
+                    temp.append("g");
+            }
+            strings.add(temp.toString());
+        }
+        return strings;
+
+
+    }
+
+
     /* Removes number from a file containg gene sequences. Use to clean genes file from a .gb
-    */
+     */
     private static void clean_file(String input_file) {
         try {
 
@@ -190,12 +246,5 @@ public class Testing {
         return str.length() == pos.getIndex();
     }
 
-    private static void time_algorithms (String original_gene, ArrayList<String> gene_sequence) {
-        long startTime = System.nanoTime();
-        //algorithm
-        long endTime = System.nanoTime();
 
-        long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-        System.out.print(duration);
-    }
 }
