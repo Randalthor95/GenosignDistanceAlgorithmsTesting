@@ -9,7 +9,7 @@ public class Application {
 
         Testing.print_test_results_for_n_errors(original_gene, gene_sequence, 3);
 
-        Testing.time_algorithms(original_gene, Testing.make_random_gene_strings(10, 1000000));
+        Testing.time_algorithms(original_gene, Testing.make_random_gene_strings(10, 10000000));
 
 
 
