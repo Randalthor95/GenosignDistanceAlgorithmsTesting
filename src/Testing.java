@@ -63,6 +63,17 @@ public class Testing {
         }
         results.add(Jaccard_matches);
 
+        //damerauLevenshtein
+        max = Collections.max(scores);
+
+        int damerauLevenshtein_matches = 0;
+        for (int i = 0; i < mutations.size(); ++i) {
+
+            if (Algorithms.damerauLevenshteinDistance(original_gene, mutations.get(i)) >= max)
+                damerauLevenshtein_matches++;
+        }
+        results.add(damerauLevenshtein_matches);
+
         return results;
     }
 
@@ -79,7 +90,7 @@ public class Testing {
         }
 
 
-        System.out.println("          Jaro,    Levenshtein,   Jaccard");
+        System.out.println("          Jaro,    Levenshtein,   Jaccard,   damerauLevenshtein");
         for (int i = 0; i < mutations_sets.size(); ++i) {
             System.out.print(mutations_sets_names.get(i) + ":  ");
             System.out.print(Integer.toString(matches.get(i).get(0)) + "/"
@@ -87,7 +98,9 @@ public class Testing {
             System.out.print(Integer.toString(matches.get(i).get(1)) + "/"
                     + Integer.toString(mutations_sets.get(i).size()) + "          ");
             System.out.print(Integer.toString(matches.get(i).get(2)) + "/"
-                    + Integer.toString(mutations_sets.get(i).size()) + " ");
+                    + Integer.toString(mutations_sets.get(i).size()) + "           ");
+            System.out.print(Integer.toString(matches.get(i).get(3)) + "/"
+                    + Integer.toString(mutations_sets.get(i).size()) + "");
             System.out.println("");
         }
 
@@ -172,6 +185,14 @@ public class Testing {
         endTime = System.nanoTime();
         duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
         System.out.println("Jaccard time: " + duration + "ms");
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < gene_sequence.size(); ++i) {
+            Algorithms.damerauLevenshteinDistance(original_gene, gene_sequence.get(i));
+        }
+        endTime = System.nanoTime();
+        duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+        System.out.println("damerauLevenshtein time: " + duration + "ms");
     }
 
 

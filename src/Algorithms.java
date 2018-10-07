@@ -1,5 +1,4 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Algorithms {
 
@@ -83,7 +82,7 @@ public class Algorithms {
         return costs[s2.length()];
     }
 
-     public static Double jaccard_similarity(final String left, final String right) {
+    public static Double jaccard_similarity(final String left, final String right) {
         final Set<String> intersectionSet = new HashSet<>();
         final Set<String> unionSet = new HashSet<>();
         boolean unionFilled = false;
@@ -107,4 +106,76 @@ public class Algorithms {
         }
         return Double.valueOf(intersectionSet.size()) / Double.valueOf(unionSet.size());
     }
+
+    public static int damerauLevenshteinDistance(String s1, String s2) {
+        int insertCost = 1;
+        int deleteCost =1;
+        int replaceCost = 1;
+        int swapCost = 1;
+
+        if (s1.length() == 0) {
+            return s2.length();
+        }
+        if (s2.length() == 0) {
+            return s1.length();
+        }
+        int[][] table = new int[s1.length()][s2.length()];
+        Map<Character, Integer> s1IndexByCharacter = new HashMap<Character, Integer>();
+        if (s1.charAt(0) != s2.charAt(0)) {
+            table[0][0] = Math.min(replaceCost, deleteCost + insertCost);
+        }
+        s1IndexByCharacter.put(s1.charAt(0), 0);
+        for (int i = 1; i < s1.length(); i++) {
+            int deleteDistance = table[i - 1][0] + deleteCost;
+            int insertDistance = (i + 1) * deleteCost + insertCost;
+            int matchDistance = i * deleteCost
+                    + (s1.charAt(i) == s2.charAt(0) ? 0 : replaceCost);
+            table[i][0] = Math.min(Math.min(deleteDistance, insertDistance),
+                    matchDistance);
+        }
+        for (int j = 1; j < s2.length(); j++) {
+            int deleteDistance = (j + 1) * insertCost + deleteCost;
+            int insertDistance = table[0][j - 1] + insertCost;
+            int matchDistance = j * insertCost
+                    + (s1.charAt(0) == s2.charAt(j) ? 0 : replaceCost);
+            table[0][j] = Math.min(Math.min(deleteDistance, insertDistance),
+                    matchDistance);
+        }
+        for (int i = 1; i < s1.length(); i++) {
+            int maxs1LetterMatchIndex = s1.charAt(i) == s2.charAt(0) ? 0
+                    : -1;
+            for (int j = 1; j < s2.length(); j++) {
+                Integer candidateSwapIndex = s1IndexByCharacter.get(s2
+                        .charAt(j));
+                int jSwap = maxs1LetterMatchIndex;
+                int deleteDistance = table[i - 1][j] + deleteCost;
+                int insertDistance = table[i][j - 1] + insertCost;
+                int matchDistance = table[i - 1][j - 1];
+                if (s1.charAt(i) != s2.charAt(j)) {
+                    matchDistance += replaceCost;
+                } else {
+                    maxs1LetterMatchIndex = j;
+                }
+                int swapDistance;
+                if (candidateSwapIndex != null && jSwap != -1) {
+                    int iSwap = candidateSwapIndex;
+                    int preSwapCost;
+                    if (iSwap == 0 && jSwap == 0) {
+                        preSwapCost = 0;
+                    } else {
+                        preSwapCost = table[Math.max(0, iSwap - 1)][Math.max(0, jSwap - 1)];
+                    }
+                    swapDistance = preSwapCost + (i - iSwap - 1) * deleteCost
+                            + (j - jSwap - 1) * insertCost + swapCost;
+                } else {
+                    swapDistance = Integer.MAX_VALUE;
+                }
+                table[i][j] = Math.min(Math.min(Math
+                        .min(deleteDistance, insertDistance), matchDistance), swapDistance);
+            }
+            s1IndexByCharacter.put(s1.charAt(i), i);
+        }
+        return table[s1.length() - 1][s2.length() - 1];
+    }
+
 }
