@@ -181,7 +181,8 @@ public class Testing {
         }
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
-        System.out.println("Jaro time: " + duration + "ms");
+        //System.out.println("Jaro time: " + duration + "ms");
+        System.out.print(duration + " ");
 
         startTime = System.nanoTime();
         for (int i = 0; i < gene_sequence.size(); ++i) {
@@ -189,7 +190,8 @@ public class Testing {
         }
         endTime = System.nanoTime();
         duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
-        System.out.println("Levenshtein time: " + duration + "ms");
+        //System.out.println("Levenshtein time: " + duration + "ms");
+        System.out.print(duration + " ");
 
         startTime = System.nanoTime();
         for (int i = 0; i < gene_sequence.size(); ++i) {
@@ -197,7 +199,8 @@ public class Testing {
         }
         endTime = System.nanoTime();
         duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
-        System.out.println("Jaccard time: " + duration + "ms");
+        //System.out.println("Jaccard time: " + duration + "ms");
+        System.out.print(duration + " ");
 
         startTime = System.nanoTime();
         for (int i = 0; i < gene_sequence.size(); ++i) {
@@ -205,7 +208,8 @@ public class Testing {
         }
         endTime = System.nanoTime();
         duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
-        System.out.println("damerauLevenshtein time: " + duration + "ms");
+        //System.out.println("damerauLevenshtein time: " + duration + "ms");
+        System.out.print(duration + " ");
 
         startTime = System.nanoTime();
         OptimalStringAlignment opti = new OptimalStringAlignment();
@@ -214,36 +218,40 @@ public class Testing {
         }
         endTime = System.nanoTime();
         duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
-        System.out.println("Optimal Algn time: " + duration + "ms");
+       // System.out.println("Optimal Algn time: " + duration + "ms");
+        System.out.print(duration + " ");
     }
 
 
-    static ArrayList<String> make_random_gene_strings(int number_of_characters, int number_of_string) {
+    static ArrayList<String> make_random_gene_strings(int number_of_characters, int number_of_strings, Random rand) {
 
         ArrayList<String> strings = new ArrayList<String>();
-        Random rand = new Random();
 
 
-        for (int i = 0; i < number_of_string; ++i) {
-            StringBuilder temp = new StringBuilder();
-            for (int j = 0; j < number_of_characters; ++j) {
-                int num = rand.nextInt(4) + 1;
-                if (num == 1)
-                    temp.append("a");
-                else if (num == 2)
-                    temp.append("c");
-                else if (num == 3)
-                    temp.append("c");
-                else
-                    temp.append("g");
-            }
-            strings.add(temp.toString());
+        for (int i = 0; i < number_of_strings; ++i) {
+
+            strings.add(make_random_gene_string(number_of_characters, rand));
         }
         return strings;
 
 
     }
 
+    public static String make_random_gene_string(int number_of_characters, Random rand) {
+        StringBuilder temp = new StringBuilder();
+        for (int j = 0; j < number_of_characters; ++j) {
+            int num = rand.nextInt(4) + 1;
+            if (num == 1)
+                temp.append("a");
+            else if (num == 2)
+                temp.append("c");
+            else if (num == 3)
+                temp.append("c");
+            else
+                temp.append("g");
+        }
+        return temp.toString();
+    }
 
     /* Removes number from a file containg gene sequences. Use to clean genes file from a .gb
      */

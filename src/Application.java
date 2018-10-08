@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Application {
 
@@ -9,8 +10,12 @@ public class Application {
 
         Testing.print_test_results_for_n_errors(original_gene, gene_sequence, 3);
 
-        Testing.time_algorithms(original_gene, Testing.make_random_gene_strings(10, 10000000));
-
+//        Random rand = new Random();
+//        for(int i = 26; i < 101; ++i) {
+//            Testing.time_algorithms(Testing.make_random_gene_string(i, rand),
+//                    Testing.make_random_gene_strings(i, 1000000, rand));
+//            System.out.println();
+//        }
 
 
     }
