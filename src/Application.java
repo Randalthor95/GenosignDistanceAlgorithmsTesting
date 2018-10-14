@@ -36,22 +36,23 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
     	//Parse the fasta file to extract gene sequence
-    	ArrayList<String>  gene_sequence=FastaParsing.gene_sequence();
+        String fasta_file = "src/test/111000_output.gb";
+    	ArrayList<String>  gene_sequence=FastaParsing.gene_sequence(fasta_file);
     	//For debugging
-    	System.out.println("Gene Sq");
+        System.out.println(gene_sequence.size());
+    	System.out.println("Gene Sequence:");
     	System.out.println(gene_sequence);
         String original_gene = "acgcttcgca";
  
-      Testing.print_test_results_for_n_errors(original_gene, gene_sequence, 4);
+      Testing.print_test_results_for_n_errors(original_gene, gene_sequence, 3);
 
 
-//        ArrayList<Integer> matches = Testing.test_accuracy_of_methods(original_gene, gene_sequence, mutations);
-//
-//
-//        System.out.println("Jaro Matches: " + Integer.toString(matches.get(0)) + "/" + Integer.toString(mutations.size()));
-//        System.out.println("Levenshtein Matches: " + Integer.toString(matches.get(1)) + "/" + Integer.toString(mutations.size()));
-//        System.out.println("Jaccard Matches: " + Integer.toString(matches.get(2)) + "/" + Integer.toString(mutations.size()));
-
+//        Random rand = new Random();
+//        for(int i = 26; i < 101; ++i) {
+//            Testing.time_algorithms(Testing.make_random_gene_string(i, rand),
+//                    Testing.make_random_gene_strings(i, 1000000, rand));
+//            System.out.println();
+//        }
 
     }
    

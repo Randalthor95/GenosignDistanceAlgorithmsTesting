@@ -33,13 +33,12 @@ import java.awt.event.ActionEvent;
 //This class is to pasre the FATSA files 
 public class FastaParsing {
 	
-	public static ArrayList<String> gene_sequence(){
+	public static ArrayList<String> gene_sequence(String fasta_file){
 		ArrayList<String> gene_squence;
 		String fileContent = "";
 		//read the contents of FASTA file
-		//TODO: Currently path to PASTA file is hardcoded. It needs to be passed as an argument
 		try {
-			fileContent = new String(Files.readAllBytes(Paths.get("src/test/111000_output.gb")));
+			fileContent = new String(Files.readAllBytes(Paths.get(fasta_file)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
