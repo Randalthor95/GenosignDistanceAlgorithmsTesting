@@ -43,6 +43,7 @@ public class Application {
     	System.out.println("Gene Sequence:");
     	System.out.println(gene_sequence);
         String original_gene = "acgcttcgca";
+        //String original_gene = "gtatcctatg";
  
       Testing.print_test_results_for_n_errors(original_gene, gene_sequence, 3);
 
